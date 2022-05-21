@@ -19,33 +19,27 @@ pipeline {
     stages {
         stage("Prerequisites") {
             steps {
-                sh "curl https://getcas.codenotary.io -L | sh"
+                sh "cas login"
             }
         }
 
         stage("Build") {
+            when {
+                branch 'master'
+            }
+
+
             steps {
                 script {
                     def files = findFiles()
 
                     for (int i = 0; i < files.length; i++) {
-                        if (files[i].directory) {
+                        if (files[i].directory && !files[0].name.startsWith(".") {
                             dir("${files[i].name}") {
                                 stage ("Build :: Build ${files[i].name} Add-on") {
-                                    steps {
-                                        sh "docker build -t ${env.DOCKER_REPOSITORY}/${files[i].name}:latest ."
-                                    }
-                                }
-
-                                stage ("Promote :: Promote ${files[i].name} Add-on") {
-                                    when {
-                                        branch 'master'
-                                    }
-
-                                    steps {
-                                        sh "cas notarize docker://${env.DOCKER_REPOSITORY}/${files[i].name}:latest"
-                                        sh "docker push ${env.DOCKER_REPOSITORY}/${files[i].name}:latest"
-                                    }
+                                    sh "docker build -t ${env.DOCKER_REPOSITORY}/${files[i].name}:latest ."
+                                    sh "cas notarize docker://${env.DOCKER_REPOSITORY}/${files[i].name}:latest"
+                                    sh "docker push ${env.DOCKER_REPOSITORY}/${files[i].name}:latest"
                                 }
                             }
                         }
