@@ -1,7 +1,0 @@
----
-channel: stable
-addons:
-  example:
-    repository: velovec/hassio-addons-repository
-    target: transmission
-    image: docker.velovec.pro/hassio-addons/transmission/{arch}
