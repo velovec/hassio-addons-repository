@@ -19,7 +19,7 @@ pipeline {
     stages {
         stage("Prerequisites") {
             steps {
-                sh "bash <(curl https://getcas.codenotary.io -L)"
+                sh "curl https://getcas.codenotary.io -L | sh"
             }
         }
 
