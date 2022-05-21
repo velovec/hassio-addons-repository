@@ -33,7 +33,7 @@ pipeline {
                     def files = findFiles()
 
                     for (int i = 0; i < files.length; i++) {
-                        if (files[i].directory && !files[0].name.startsWith(".")) {
+                        if (files[i].directory && !files[i].name.startsWith(".")) {
                             dir("${files[i].name}") {
                                 stage ("Build :: Build ${files[i].name} Add-on") {
                                     sh "docker build -t ${env.DOCKER_REPOSITORY}/${files[i].name}:latest ."
