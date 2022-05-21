@@ -27,28 +27,29 @@ pipeline {
             steps {
                 script {
                     def files = findFiles()
-                    files.each(f -> {
-                        if (f.directory) {
-                            dir("${f.name}") {
-                                stage ("Build :: Build ${f.name} Add-on") {
+
+                    for (int i = 0; i < files.length; i++) {
+                        if (files[i].directory) {
+                            dir("${files[i].name}") {
+                                stage ("Build :: Build ${files[i].name} Add-on") {
                                     steps {
-                                        sh "docker build -t ${env.DOCKER_REPOSITORY}/${f.name}:latest ."
+                                        sh "docker build -t ${env.DOCKER_REPOSITORY}/${files[i].name}:latest ."
                                     }
                                 }
 
-                                stage ("Promote :: Promote ${f.name} Add-on") {
+                                stage ("Promote :: Promote ${files[i].name} Add-on") {
                                     when {
                                         branch 'master'
                                     }
 
                                     steps {
-                                        sh "cas notarize docker://${env.DOCKER_REPOSITORY}/${f.name}:latest"
-                                        sh "docker push ${env.DOCKER_REPOSITORY}/${f.name}:latest"
+                                        sh "cas notarize docker://${env.DOCKER_REPOSITORY}/${files[i].name}:latest"
+                                        sh "docker push ${env.DOCKER_REPOSITORY}/${files[i].name}:latest"
                                     }
                                 }
                             }
                         }
-                    })
+                    }
                 }
             }
         }
