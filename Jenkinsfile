@@ -17,36 +17,41 @@ pipeline {
     }
 
     stages {
-        stage("Install CAS") {
+        stage("Prerequisites") {
             steps {
                 sh "bash <(curl https://getcas.codenotary.io -L)"
             }
         }
 
-        def files = findFiles()
-        files.each(f -> {
-            if (f.directory) {
-                dir("${f.name}") {
-                    stage ("Build :: Build ${f.name} Add-on") {
-                        steps {
-                            sh "docker build -t ${env.DOCKER_REPOSITORY}/${f.name}:latest ."
-                        }
-                    }
+        stage("Build") {
+            steps {
+                script {
+                    def files = findFiles()
+                    files.each(f -> {
+                        if (f.directory) {
+                            dir("${f.name}") {
+                                stage ("Build :: Build ${f.name} Add-on") {
+                                    steps {
+                                        sh "docker build -t ${env.DOCKER_REPOSITORY}/${f.name}:latest ."
+                                    }
+                                }
 
-                    stage ("Promote :: Promote ${f.name} Add-on") {
-                        when {
-                            branch 'master'
-                        }
+                                stage ("Promote :: Promote ${f.name} Add-on") {
+                                    when {
+                                        branch 'master'
+                                    }
 
-                        steps {
-                            sh "cas notarize docker://${env.DOCKER_REPOSITORY}/${f.name}:latest"
-                            sh "docker push ${env.DOCKER_REPOSITORY}/${f.name}:latest"
+                                    steps {
+                                        sh "cas notarize docker://${env.DOCKER_REPOSITORY}/${f.name}:latest"
+                                        sh "docker push ${env.DOCKER_REPOSITORY}/${f.name}:latest"
+                                    }
+                                }
+                            }
                         }
-                    }
+                    })
                 }
             }
-        })
-
+        }
     }
 
     post {
