@@ -1,0 +1,14 @@
+arch:
+- amd64
+codenotary: velovec@gmail.com
+description: SuperFleet Home Assistant Add-On
+image: docker.velovec.pro/hassio-addons/transmission/{arch}
+init: false
+name: SuperFleet
+options:
+  log_level: info
+schema:
+  log_level: list(trace|debug|info|notice|warning|error|fatal)
+slug: superfleet
+url: https://github.com/velovec/hassio-addons-repository
+version: 4.5.0
