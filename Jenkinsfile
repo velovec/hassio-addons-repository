@@ -10,6 +10,7 @@ pipeline {
     environment {
         DOCKER_REPOSITORY = 'docker.velovec.pro/hassio-addons'
         DOCKER_CONFIG = "${env.WORKSPACE}/.docker"
+        HOME = "/tmp"
     }
 
     options {
