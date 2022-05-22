@@ -38,7 +38,7 @@ pipeline {
                             dir("${files[i].name}") {
                                 def addon = readYaml file: "config.yaml"
 
-                                stage ("Build :: Build ${files[i].name}:${addon.version} Add-on") {
+                                stage ("Build :: Build ${files[i].name} Add-on") {
                                     sh "docker build -t ${env.DOCKER_REPOSITORY}/${files[i].name}:${addon.version} ."
                                     sh "cas notarize docker://${env.DOCKER_REPOSITORY}/${files[i].name}:${addon.version}"
                                     sh "docker push ${env.DOCKER_REPOSITORY}/${files[i].name}:${addon.version}"
