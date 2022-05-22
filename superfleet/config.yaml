@@ -5,6 +5,7 @@ description: SuperFleet Home Assistant Add-On
 image: docker.velovec.pro/hassio-addons/superfleet
 init: false
 name: SuperFleet
+auth_api: true
 ports:
   8080/tcp: null
   1488/tcp: null
