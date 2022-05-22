@@ -1,5 +1,19 @@
 ---
 configuration:
-  log_level:
-    name: Log level
-    description: The amount of logging the add-on should do.
+  rabbitmq:
+    host:
+      name: RabbitMQ Host
+      description: RabbitMQ connection host (defaults to 'localhost')
+    port:
+      name: RabbitMQ Port
+      description: RabbitMQ connection port (defaults to 5673)
+    user:
+      name: RabbitMQ User
+      description: RabbitMQ connection user (defaults to 'guest')
+    password:
+      name: RabbitMQ Host
+      description: RabbitMQ connection password (defaults to 'guest')
+  database:
+    url:
+    username:
+    password:
