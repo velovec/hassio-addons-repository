@@ -36,10 +36,12 @@ pipeline {
                     for (int i = 0; i < files.length; i++) {
                         if (files[i].directory && !files[i].name.startsWith(".")) {
                             dir("${files[i].name}") {
-                                stage ("Build :: Build ${files[i].name} Add-on") {
-                                    sh "docker build -t ${env.DOCKER_REPOSITORY}/${files[i].name}:latest ."
-                                    sh "cas notarize docker://${env.DOCKER_REPOSITORY}/${files[i].name}:latest"
-                                    sh "docker push ${env.DOCKER_REPOSITORY}/${files[i].name}:latest"
+                                def addon = readYaml file: "config.yaml"
+
+                                stage ("Build :: Build ${files[i].name}:${addon.version} Add-on") {
+                                    sh "docker build -t ${env.DOCKER_REPOSITORY}/${files[i].name}:${addon.version} ."
+                                    sh "cas notarize docker://${env.DOCKER_REPOSITORY}/${files[i].name}:${addon.version}"
+                                    sh "docker push ${env.DOCKER_REPOSITORY}/${files[i].name}:${addon.version}"
                                 }
                             }
                         }

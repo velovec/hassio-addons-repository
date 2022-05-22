@@ -36,4 +36,4 @@ schema:
     password: password
 slug: superfleet
 url: https://github.com/velovec/hassio-addons-repository
-version: latest
+version: 1.0.0
