@@ -2,7 +2,7 @@ arch:
 - amd64
 codenotary: velovec@gmail.com
 description: SuperFleet Home Assistant Add-On
-image: docker.velovec.pro/hassio-addons/transmission/{arch}
+image: docker.velovec.pro/hassio-addons/superfleet/{arch}
 init: false
 name: SuperFleet
 ports:
