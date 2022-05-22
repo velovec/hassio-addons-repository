@@ -5,10 +5,56 @@ description: SuperFleet Home Assistant Add-On
 image: docker.velovec.pro/hassio-addons/transmission/{arch}
 init: false
 name: SuperFleet
+ports:
+  8080/tcp: null
+  1488/tcp: null
+ports_description:
+  8080/tcp: REST API
+  1488/tcp: SSH-based CLI
+map:
+  - share:rw
 options:
-  log_level: info
+  rabbitmq:
+    host: rabbitmq
+    port: 5673
+    user: guest
+    password: guest
+  keycloak_url: http://keycloak
+  keycloak_admin:
+    realm: master
+    client-id: null
+    client-secret: null
+    username: admin
+    password: P@ssw0rd
+  keycloak_client:
+    realm: superfleet
+    client-id: null
+    client-secret: null
+  database:
+    url: jdbc:postgresql://postgres:5432/superfleet
+    username: postgres
+    password: P@ssw0rd
 schema:
-  log_level: list(trace|debug|info|notice|warning|error|fatal)
+  rabbitmq:
+    host: str
+    port: port
+    user: str
+    password: password
+  keycloak_url: url
+  keycloak_admin:
+    realm: str
+    client-id: str
+    client-secret: str
+    username: str
+    password: password
+  keycloak_client:
+    realm: str
+    client-id: str
+    client-secret: str
+  database:
+    url: str
+    username: str
+    password: password
 slug: superfleet
 url: https://github.com/velovec/hassio-addons-repository
 version: 4.5.0
