@@ -40,4 +40,4 @@ services:
   mysql: want
 slug: superfleet
 url: https://github.com/velovec/hassio-addons-repository
-version: 1.0.0
+version: 1.0.1
