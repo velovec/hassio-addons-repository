@@ -13,7 +13,7 @@ configuration:
     password:
       name: RabbitMQ Host
       description: RabbitMQ connection password (defaults to 'guest')
-  database:
+   database:
     url:
     username:
     password:

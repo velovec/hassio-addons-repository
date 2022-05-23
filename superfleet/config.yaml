@@ -6,6 +6,8 @@ image: docker.velovec.pro/hassio-addons/superfleet
 init: false
 name: SuperFleet
 auth_api: true
+hassio_api: true
+hassio_role: default
 ports:
   8080/tcp: null
   1488/tcp: null
@@ -34,6 +36,8 @@ schema:
     url: str
     username: str
     password: password
+services:
+  mysql: want
 slug: superfleet
 url: https://github.com/velovec/hassio-addons-repository
 version: 1.0.0
